@@ -1,0 +1,95 @@
+service: numbers
+app: numerouno
+tenant: clybs
+
+custom:
+  tableName: 'numbers-table-${self:provider.stage}'
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: ap-southeast-1
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+    - dynamodb:Query
+    - dynamodb:Scan
+    - dynamodb:GetItem
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:DeleteItem
+    Resource:
+    - { "Fn::GetAtt": ["NumbersDynamoDBTable", "Arn" ] }
+    - Fn::Join:
+      - "/"
+      -
+        - { "Fn::GetAtt": ["NumbersDynamoDBTable", "Arn" ] }
+        - "index/*"
+  environment:
+    NUMBERS_TABLE: ${self:custom.tableName}
+
+functions:
+  app:
+    handler: index.handler
+    events:
+    - http: ANY /
+    - http: 'ANY {proxy+}'
+  postNumber:
+    handler: index.handler
+    events:
+    - http: 'POST /numbers'
+  getNumber:
+    handler: index.handler
+    events:
+    - http: 'GET /numbers'
+    - http: 'GET /numbers/{proxy+}'
+  putNumber:
+    handler: index.handler
+    events:
+    - http: 'PUT /numbers/{proxy+}'
+  deleteNumber:
+    handler: index.handler
+    events:
+    - http: 'DELETE /numbers/{proxy+}'
+
+resources:
+  Resources:
+    NumbersDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+        - AttributeName: number
+          AttributeType: S
+        - AttributeName: block
+          AttributeType: S
+        - AttributeName: available
+          AttributeType: S
+        KeySchema:
+        - AttributeName: number
+          KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableName}
+        GlobalSecondaryIndexes:
+        - IndexName: BlockIndex
+          KeySchema:
+          - AttributeName: block
+            KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+        - IndexName: AvailableIndex
+          KeySchema:
+          - AttributeName: available
+            KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+
+
