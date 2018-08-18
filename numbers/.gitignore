@@ -1,2 +1,3 @@
 # Dependency directory
+.serverless
 node_modules

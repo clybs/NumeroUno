@@ -57,12 +57,6 @@
           "ServerlessDeploymentBucket": {
             "Type": "AWS::S3::Bucket"
           },
-          "AppLogGroup": {
-            "Type": "AWS::Logs::LogGroup",
-            "Properties": {
-              "LogGroupName": "/aws/lambda/numbers-dev-app"
-            }
-          },
           "PostNumberLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
@@ -128,9 +122,6 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-app:*"
-                          },
-                          {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-postNumber:*"
                           },
                           {
@@ -150,9 +141,6 @@
                           "logs:PutLogEvents"
                         ],
                         "Resource": [
-                          {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-app:*:*"
-                          },
                           {
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-postNumber:*:*"
                           },
@@ -188,47 +176,6 @@
               }
             }
           },
-          "AppLambdaFunction": {
-            "Type": "AWS::Lambda::Function",
-            "Properties": {
-              "Code": {
-                "S3Bucket": {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "S3Key": "serverless/numbers/dev/1534520863190-2018-08-17T15:47:43.190Z/numbers.zip"
-              },
-              "FunctionName": "numbers-dev-app",
-              "Handler": "index.handler",
-              "MemorySize": 1024,
-              "Role": {
-                "Fn::GetAtt": [
-                  "IamRoleLambdaExecution",
-                  "Arn"
-                ]
-              },
-              "Runtime": "nodejs8.10",
-              "Timeout": 6,
-              "Environment": {
-                "Variables": {
-                  "NUMBERS_TABLE": "numbers-table-dev"
-                }
-              }
-            },
-            "DependsOn": [
-              "AppLogGroup",
-              "IamRoleLambdaExecution"
-            ]
-          },
-          "AppLambdaVersionGdjfgpOGQJCSSwwriIGiUMCqPZdNpYLf6AcOSTXZ8s": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "AppLambdaFunction"
-              },
-              "CodeSha256": "FnygFY1yjhL/rfmtb2RkBEnTUnbWRPjoynQKem6A9ts="
-            }
-          },
           "PostNumberLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
@@ -236,7 +183,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/numbers/dev/1534520863190-2018-08-17T15:47:43.190Z/numbers.zip"
+                "S3Key": "serverless/numbers/dev/1534554206691-2018-08-18T01:03:26.691Z/numbers.zip"
               },
               "FunctionName": "numbers-dev-postNumber",
               "Handler": "index.handler",
@@ -260,14 +207,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "PostNumberLambdaVersion3rhWQpv1MbSPnpQYNuJ3Szt23rGQzqIZ6U8NM6jiCI": {
+          "PostNumberLambdaVersionppzajhPOYkV3VS5MmkNPQrZzd1dewGxoCaeRSCBsY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PostNumberLambdaFunction"
               },
-              "CodeSha256": "FnygFY1yjhL/rfmtb2RkBEnTUnbWRPjoynQKem6A9ts="
+              "CodeSha256": "CWqHo40PUb+k1drq0+tnmh35hS8F/ssBCkeNWb5gGM8="
             }
           },
           "GetNumberLambdaFunction": {
@@ -277,7 +224,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/numbers/dev/1534520863190-2018-08-17T15:47:43.190Z/numbers.zip"
+                "S3Key": "serverless/numbers/dev/1534554206691-2018-08-18T01:03:26.691Z/numbers.zip"
               },
               "FunctionName": "numbers-dev-getNumber",
               "Handler": "index.handler",
@@ -301,14 +248,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GetNumberLambdaVersionsETnt8nDMZ6YVVHC6FYftHEtvNwYfVfgvf9KV2Yk7c": {
+          "GetNumberLambdaVersion7PpowKOeXgS5aVx90zgFVzB1K8nm6koK3ufKvM": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetNumberLambdaFunction"
               },
-              "CodeSha256": "FnygFY1yjhL/rfmtb2RkBEnTUnbWRPjoynQKem6A9ts="
+              "CodeSha256": "CWqHo40PUb+k1drq0+tnmh35hS8F/ssBCkeNWb5gGM8="
             }
           },
           "PutNumberLambdaFunction": {
@@ -318,7 +265,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/numbers/dev/1534520863190-2018-08-17T15:47:43.190Z/numbers.zip"
+                "S3Key": "serverless/numbers/dev/1534554206691-2018-08-18T01:03:26.691Z/numbers.zip"
               },
               "FunctionName": "numbers-dev-putNumber",
               "Handler": "index.handler",
@@ -342,14 +289,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "PutNumberLambdaVersionhyvdnBjIJg1gYSSTweJIxEmBpge6GvGSj02SLusBLs": {
+          "PutNumberLambdaVersionW1hE53unP8hKECsIsnEglGmdfUv1vsBrPgpkonH4C4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PutNumberLambdaFunction"
               },
-              "CodeSha256": "FnygFY1yjhL/rfmtb2RkBEnTUnbWRPjoynQKem6A9ts="
+              "CodeSha256": "CWqHo40PUb+k1drq0+tnmh35hS8F/ssBCkeNWb5gGM8="
             }
           },
           "DeleteNumberLambdaFunction": {
@@ -359,7 +306,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/numbers/dev/1534520863190-2018-08-17T15:47:43.190Z/numbers.zip"
+                "S3Key": "serverless/numbers/dev/1534554206691-2018-08-18T01:03:26.691Z/numbers.zip"
               },
               "FunctionName": "numbers-dev-deleteNumber",
               "Handler": "index.handler",
@@ -383,14 +330,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "DeleteNumberLambdaVersion2VMznJJxaWsnYDhVOVLF0MxLyZmYKVTO89h87r4oRJw": {
+          "DeleteNumberLambdaVersionItmUJovQCtbvlXSGuStUlShoGamlWEB63wa0YqpPELg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteNumberLambdaFunction"
               },
-              "CodeSha256": "FnygFY1yjhL/rfmtb2RkBEnTUnbWRPjoynQKem6A9ts="
+              "CodeSha256": "CWqHo40PUb+k1drq0+tnmh35hS8F/ssBCkeNWb5gGM8="
             }
           },
           "ApiGatewayRestApi": {
@@ -401,21 +348,6 @@
                 "Types": [
                   "EDGE"
                 ]
-              }
-            }
-          },
-          "ApiGatewayResourceProxyVar": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Fn::GetAtt": [
-                  "ApiGatewayRestApi",
-                  "RootResourceId"
-                ]
-              },
-              "PathPart": "{proxy+}",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
               }
             }
           },
@@ -444,95 +376,6 @@
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
-            }
-          },
-          "ApiGatewayMethodAny": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "ANY",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Fn::GetAtt": [
-                  "ApiGatewayRestApi",
-                  "RootResourceId"
-                ]
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "NONE",
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS_PROXY",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "AppLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                }
-              },
-              "MethodResponses": []
-            }
-          },
-          "ApiGatewayMethodProxyVarAny": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "ANY",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceProxyVar"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "NONE",
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS_PROXY",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "AppLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                }
-              },
-              "MethodResponses": []
             }
           },
           "ApiGatewayMethodNumbersPost": {
@@ -750,7 +593,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1534520863458": {
+          "ApiGatewayDeployment1534554206913": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -759,61 +602,12 @@
               "StageName": "dev"
             },
             "DependsOn": [
-              "ApiGatewayMethodAny",
-              "ApiGatewayMethodProxyVarAny",
               "ApiGatewayMethodNumbersPost",
               "ApiGatewayMethodNumbersGet",
               "ApiGatewayMethodNumbersProxyVarGet",
               "ApiGatewayMethodNumbersProxyVarPut",
               "ApiGatewayMethodNumbersProxyVarDelete"
             ]
-          },
-          "AppLambdaPermissionApiGateway": {
-            "Type": "AWS::Lambda::Permission",
-            "Properties": {
-              "FunctionName": {
-                "Fn::GetAtt": [
-                  "AppLambdaFunction",
-                  "Arn"
-                ]
-              },
-              "Action": "lambda:InvokeFunction",
-              "Principal": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "apigateway.",
-                    {
-                      "Ref": "AWS::URLSuffix"
-                    }
-                  ]
-                ]
-              },
-              "SourceArn": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:",
-                    {
-                      "Ref": "AWS::Partition"
-                    },
-                    ":execute-api:",
-                    {
-                      "Ref": "AWS::Region"
-                    },
-                    ":",
-                    {
-                      "Ref": "AWS::AccountId"
-                    },
-                    ":",
-                    {
-                      "Ref": "ApiGatewayRestApi"
-                    },
-                    "/*/*"
-                  ]
-                ]
-              }
-            }
           },
           "PostNumberLambdaPermissionApiGateway": {
             "Type": "AWS::Lambda::Permission",
@@ -1074,34 +868,28 @@
               "Ref": "ServerlessDeploymentBucket"
             }
           },
-          "AppLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Ref": "AppLambdaVersionGdjfgpOGQJCSSwwriIGiUMCqPZdNpYLf6AcOSTXZ8s"
-            }
-          },
           "PostNumberLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PostNumberLambdaVersion3rhWQpv1MbSPnpQYNuJ3Szt23rGQzqIZ6U8NM6jiCI"
+              "Ref": "PostNumberLambdaVersionppzajhPOYkV3VS5MmkNPQrZzd1dewGxoCaeRSCBsY"
             }
           },
           "GetNumberLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetNumberLambdaVersionsETnt8nDMZ6YVVHC6FYftHEtvNwYfVfgvf9KV2Yk7c"
+              "Ref": "GetNumberLambdaVersion7PpowKOeXgS5aVx90zgFVzB1K8nm6koK3ufKvM"
             }
           },
           "PutNumberLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PutNumberLambdaVersionhyvdnBjIJg1gYSSTweJIxEmBpge6GvGSj02SLusBLs"
+              "Ref": "PutNumberLambdaVersionW1hE53unP8hKECsIsnEglGmdfUv1vsBrPgpkonH4C4"
             }
           },
           "DeleteNumberLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteNumberLambdaVersion2VMznJJxaWsnYDhVOVLF0MxLyZmYKVTO89h87r4oRJw"
+              "Ref": "DeleteNumberLambdaVersionItmUJovQCtbvlXSGuStUlShoGamlWEB63wa0YqpPELg"
             }
           },
           "ServiceEndpoint": {
@@ -1148,23 +936,6 @@
     },
     "pluginsData": {},
     "functions": {
-      "app": {
-        "handler": "index.handler",
-        "events": [
-          {
-            "http": "ANY /"
-          },
-          {
-            "http": "ANY {proxy+}"
-          }
-        ],
-        "name": "numbers-dev-app",
-        "package": {},
-        "memory": 1024,
-        "timeout": 6,
-        "runtime": "nodejs8.10",
-        "vpc": {}
-      },
       "postNumber": {
         "handler": "index.handler",
         "events": [
@@ -1294,12 +1065,10 @@
       },
       "Outputs": {}
     },
-    "app": "numerouno",
-    "tenant": "clybs",
     "artifact": "/Users/cliburnsolano/Documents/Work/MyRepublic/NumeroUno/numbers/.serverless/numbers.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/numbers/dev/1534520863190-2018-08-17T15:47:43.190Z",
+    "artifactDirectoryName": "serverless/numbers/dev/1534554206691-2018-08-18T01:03:26.691Z",
     "artifact": "numbers.zip"
   }
 }

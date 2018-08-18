@@ -1,6 +1,6 @@
 service: numbers
-app: numerouno
-tenant: clybs
+#app: numerouno
+#tenant: clybs
 
 custom:
   tableName: 'numbers-table-${self:provider.stage}'
@@ -30,11 +30,11 @@ provider:
     NUMBERS_TABLE: ${self:custom.tableName}
 
 functions:
-  app:
-    handler: index.handler
-    events:
-    - http: ANY /
-    - http: 'ANY {proxy+}'
+#  app:
+#    handler: index.handler
+#    events:
+#    - http: ANY /
+#    - http: 'ANY {proxy+}'
   postNumber:
     handler: index.handler
     events:
