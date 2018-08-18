@@ -141,10 +141,12 @@ Prod Endpoint:
 ### Dev Notes
 - Went with serverless because it manages my code as well as my infrastructure
 - Deployed in Singapore as this is the closest to client (ap-southeast-1)
+- Auto scaling is enabled but minimal. See serverless.yml file for reference.
 - Authentication is left to another service
 - Available and Blocked properties are indexed for faster retrieval
 - No test added as this is time constrained
 - Blocks and numbers are string because a number can start in 0; i.e. 0918
+- Limited features due to time constraints
 
 [Provider Credentials]: <https://www.youtube.com/watch?v=HSd9uYj2LJA>
 [https://v83vzzjgt3.execute-api.ap-southeast-1.amazonaws.com/dev/numbers]:<https://v83vzzjgt3.execute-api.ap-southeast-1.amazonaws.com/dev/numbers>
