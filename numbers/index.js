@@ -97,7 +97,7 @@ function listBlockIndex(filters) {
 
             // Delete the not needed values
             delete result.ScannedCount;
-            // delete result.LastEvaluatedKey;
+            delete result.LastEvaluatedKey;
 
             res.json(result);
         } else {

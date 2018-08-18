@@ -8,25 +8,25 @@
     "PostNumberLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/numbers-dev-postNumber"
+        "LogGroupName": "/aws/lambda/numbers-prod-postNumber"
       }
     },
     "GetNumberLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/numbers-dev-getNumber"
+        "LogGroupName": "/aws/lambda/numbers-prod-getNumber"
       }
     },
     "PutNumberLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/numbers-dev-putNumber"
+        "LogGroupName": "/aws/lambda/numbers-prod-putNumber"
       }
     },
     "DeleteNumberLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/numbers-dev-deleteNumber"
+        "LogGroupName": "/aws/lambda/numbers-prod-deleteNumber"
       }
     },
     "IamRoleLambdaExecution": {
@@ -55,7 +55,7 @@
               "Fn::Join": [
                 "-",
                 [
-                  "dev",
+                  "prod",
                   "numbers",
                   "lambda"
                 ]
@@ -71,16 +71,16 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-postNumber:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-prod-postNumber:*"
                     },
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-getNumber:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-prod-getNumber:*"
                     },
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-putNumber:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-prod-putNumber:*"
                     },
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-deleteNumber:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-prod-deleteNumber:*"
                     }
                   ]
                 },
@@ -91,16 +91,16 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-postNumber:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-prod-postNumber:*:*"
                     },
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-getNumber:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-prod-getNumber:*:*"
                     },
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-putNumber:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-prod-putNumber:*:*"
                     },
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-dev-deleteNumber:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/numbers-prod-deleteNumber:*:*"
                     }
                   ]
                 },
@@ -162,7 +162,7 @@
             "-",
             [
               "numbers",
-              "dev",
+              "prod",
               "ap-southeast-1",
               "lambdaRole"
             ]
@@ -177,9 +177,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/numbers/dev/1534565178016-2018-08-18T04:06:18.016Z/numbers.zip"
+          "S3Key": "serverless/numbers/prod/1534567983718-2018-08-18T04:53:03.718Z/numbers.zip"
         },
-        "FunctionName": "numbers-dev-postNumber",
+        "FunctionName": "numbers-prod-postNumber",
         "Handler": "index.handler",
         "MemorySize": 1024,
         "Role": {
@@ -192,7 +192,7 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "NUMBERS_TABLE": "numbers-table-dev"
+            "NUMBERS_TABLE": "numbers-table-prod"
           }
         }
       },
@@ -201,14 +201,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "PostNumberLambdaVersionkaYPRaakkiCtMGnQbBUzvlxcjzQx0nricGhFf54g8EQ": {
+    "PostNumberLambdaVersionhvxv21dL8usbvoye4BBDNlTzi40Ut46Wf9BvW3D8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PostNumberLambdaFunction"
         },
-        "CodeSha256": "xyru4yYVI2K24ZgCD//UGOzDA1F3WoJQEihNuvbEvQ8="
+        "CodeSha256": "uhRNAdDJkM3529cZiVEk+x0Nytaea0zp24RsmloOqIc="
       }
     },
     "GetNumberLambdaFunction": {
@@ -218,9 +218,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/numbers/dev/1534565178016-2018-08-18T04:06:18.016Z/numbers.zip"
+          "S3Key": "serverless/numbers/prod/1534567983718-2018-08-18T04:53:03.718Z/numbers.zip"
         },
-        "FunctionName": "numbers-dev-getNumber",
+        "FunctionName": "numbers-prod-getNumber",
         "Handler": "index.handler",
         "MemorySize": 1024,
         "Role": {
@@ -233,7 +233,7 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "NUMBERS_TABLE": "numbers-table-dev"
+            "NUMBERS_TABLE": "numbers-table-prod"
           }
         }
       },
@@ -242,14 +242,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetNumberLambdaVersionXMmJ0XcqcVQOL6kLbS5CGlG1yIZwEgWKFCNNnsNIr78": {
+    "GetNumberLambdaVersionkIuSYWWwZYeImPKAlfPwzMNugdYLal2aPpJnQaVyAEs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetNumberLambdaFunction"
         },
-        "CodeSha256": "xyru4yYVI2K24ZgCD//UGOzDA1F3WoJQEihNuvbEvQ8="
+        "CodeSha256": "uhRNAdDJkM3529cZiVEk+x0Nytaea0zp24RsmloOqIc="
       }
     },
     "PutNumberLambdaFunction": {
@@ -259,9 +259,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/numbers/dev/1534565178016-2018-08-18T04:06:18.016Z/numbers.zip"
+          "S3Key": "serverless/numbers/prod/1534567983718-2018-08-18T04:53:03.718Z/numbers.zip"
         },
-        "FunctionName": "numbers-dev-putNumber",
+        "FunctionName": "numbers-prod-putNumber",
         "Handler": "index.handler",
         "MemorySize": 1024,
         "Role": {
@@ -274,7 +274,7 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "NUMBERS_TABLE": "numbers-table-dev"
+            "NUMBERS_TABLE": "numbers-table-prod"
           }
         }
       },
@@ -283,14 +283,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "PutNumberLambdaVersionZQvNi235WKoLc17sgK6zBkhncc7wh3bfmk9AzvfgQ": {
+    "PutNumberLambdaVersionWzUJ1tebC6HLtpvtezAqPJIoq88NS7ZWpeHsYzHsnk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PutNumberLambdaFunction"
         },
-        "CodeSha256": "xyru4yYVI2K24ZgCD//UGOzDA1F3WoJQEihNuvbEvQ8="
+        "CodeSha256": "uhRNAdDJkM3529cZiVEk+x0Nytaea0zp24RsmloOqIc="
       }
     },
     "DeleteNumberLambdaFunction": {
@@ -300,9 +300,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/numbers/dev/1534565178016-2018-08-18T04:06:18.016Z/numbers.zip"
+          "S3Key": "serverless/numbers/prod/1534567983718-2018-08-18T04:53:03.718Z/numbers.zip"
         },
-        "FunctionName": "numbers-dev-deleteNumber",
+        "FunctionName": "numbers-prod-deleteNumber",
         "Handler": "index.handler",
         "MemorySize": 1024,
         "Role": {
@@ -315,7 +315,7 @@
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "NUMBERS_TABLE": "numbers-table-dev"
+            "NUMBERS_TABLE": "numbers-table-prod"
           }
         }
       },
@@ -324,20 +324,20 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "DeleteNumberLambdaVersionVU36uHyb78LyWDxUGThSVSyyxl6FwGNdV0ShLLkL0": {
+    "DeleteNumberLambdaVersionsNpmN95GotOlq9IF9yvaae1RcBUo9J3seoUg5VXZq4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteNumberLambdaFunction"
         },
-        "CodeSha256": "xyru4yYVI2K24ZgCD//UGOzDA1F3WoJQEihNuvbEvQ8="
+        "CodeSha256": "uhRNAdDJkM3529cZiVEk+x0Nytaea0zp24RsmloOqIc="
       }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-numbers",
+        "Name": "prod-numbers",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -654,13 +654,13 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1534565178223": {
+    "ApiGatewayDeployment1534567983919": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
-        "StageName": "dev"
+        "StageName": "prod"
       },
       "DependsOn": [
         "ApiGatewayMethodNumbersPost",
@@ -883,10 +883,10 @@
           }
         ],
         "ProvisionedThroughput": {
-          "ReadCapacityUnits": 1,
-          "WriteCapacityUnits": 1
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5
         },
-        "TableName": "numbers-table-dev",
+        "TableName": "numbers-table-prod",
         "GlobalSecondaryIndexes": [
           {
             "IndexName": "BlockIndex",
@@ -900,8 +900,8 @@
               "ProjectionType": "ALL"
             },
             "ProvisionedThroughput": {
-              "ReadCapacityUnits": 1,
-              "WriteCapacityUnits": 1
+              "ReadCapacityUnits": 5,
+              "WriteCapacityUnits": 5
             }
           },
           {
@@ -916,8 +916,8 @@
               "ProjectionType": "ALL"
             },
             "ProvisionedThroughput": {
-              "ReadCapacityUnits": 1,
-              "WriteCapacityUnits": 1
+              "ReadCapacityUnits": 5,
+              "WriteCapacityUnits": 5
             }
           }
         ]
@@ -1192,25 +1192,25 @@
     "PostNumberLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PostNumberLambdaVersionkaYPRaakkiCtMGnQbBUzvlxcjzQx0nricGhFf54g8EQ"
+        "Ref": "PostNumberLambdaVersionhvxv21dL8usbvoye4BBDNlTzi40Ut46Wf9BvW3D8"
       }
     },
     "GetNumberLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetNumberLambdaVersionXMmJ0XcqcVQOL6kLbS5CGlG1yIZwEgWKFCNNnsNIr78"
+        "Ref": "GetNumberLambdaVersionkIuSYWWwZYeImPKAlfPwzMNugdYLal2aPpJnQaVyAEs"
       }
     },
     "PutNumberLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PutNumberLambdaVersionZQvNi235WKoLc17sgK6zBkhncc7wh3bfmk9AzvfgQ"
+        "Ref": "PutNumberLambdaVersionWzUJ1tebC6HLtpvtezAqPJIoq88NS7ZWpeHsYzHsnk"
       }
     },
     "DeleteNumberLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteNumberLambdaVersionVU36uHyb78LyWDxUGThSVSyyxl6FwGNdV0ShLLkL0"
+        "Ref": "DeleteNumberLambdaVersionsNpmN95GotOlq9IF9yvaae1RcBUo9J3seoUg5VXZq4"
       }
     },
     "ServiceEndpoint": {
@@ -1227,7 +1227,7 @@
             {
               "Ref": "AWS::URLSuffix"
             },
-            "/dev"
+            "/prod"
           ]
         ]
       }
