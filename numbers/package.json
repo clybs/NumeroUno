@@ -13,6 +13,7 @@
     "aws-sdk": "^2.295.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "serverless-http": "^1.6.0"
+    "serverless-http": "^1.6.0",
+    "serverless-plugin-dynamodb-autoscaling": "^2.1.1"
   }
 }

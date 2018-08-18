@@ -91,7 +91,8 @@
                     "Effect": "Allow",
                     "Principal": {
                       "Service": [
-                        "lambda.amazonaws.com"
+                        "lambda.amazonaws.com",
+                        "application-autoscaling.amazonaws.com"
                       ]
                     },
                     "Action": [
@@ -157,6 +158,21 @@
                       },
                       {
                         "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "dynamodb:DescribeTable",
+                          "dynamodb:UpdateTable"
+                        ],
+                        "Resource": "arn:aws:dynamodb:*"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "cloudwatch:*"
+                        ],
+                        "Resource": "*"
                       }
                     ]
                   }
@@ -183,7 +199,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/numbers/dev/1534554206691-2018-08-18T01:03:26.691Z/numbers.zip"
+                "S3Key": "serverless/numbers/dev/1534565178016-2018-08-18T04:06:18.016Z/numbers.zip"
               },
               "FunctionName": "numbers-dev-postNumber",
               "Handler": "index.handler",
@@ -207,14 +223,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "PostNumberLambdaVersionppzajhPOYkV3VS5MmkNPQrZzd1dewGxoCaeRSCBsY": {
+          "PostNumberLambdaVersionkaYPRaakkiCtMGnQbBUzvlxcjzQx0nricGhFf54g8EQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PostNumberLambdaFunction"
               },
-              "CodeSha256": "CWqHo40PUb+k1drq0+tnmh35hS8F/ssBCkeNWb5gGM8="
+              "CodeSha256": "xyru4yYVI2K24ZgCD//UGOzDA1F3WoJQEihNuvbEvQ8="
             }
           },
           "GetNumberLambdaFunction": {
@@ -224,7 +240,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/numbers/dev/1534554206691-2018-08-18T01:03:26.691Z/numbers.zip"
+                "S3Key": "serverless/numbers/dev/1534565178016-2018-08-18T04:06:18.016Z/numbers.zip"
               },
               "FunctionName": "numbers-dev-getNumber",
               "Handler": "index.handler",
@@ -248,14 +264,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GetNumberLambdaVersion7PpowKOeXgS5aVx90zgFVzB1K8nm6koK3ufKvM": {
+          "GetNumberLambdaVersionXMmJ0XcqcVQOL6kLbS5CGlG1yIZwEgWKFCNNnsNIr78": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetNumberLambdaFunction"
               },
-              "CodeSha256": "CWqHo40PUb+k1drq0+tnmh35hS8F/ssBCkeNWb5gGM8="
+              "CodeSha256": "xyru4yYVI2K24ZgCD//UGOzDA1F3WoJQEihNuvbEvQ8="
             }
           },
           "PutNumberLambdaFunction": {
@@ -265,7 +281,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/numbers/dev/1534554206691-2018-08-18T01:03:26.691Z/numbers.zip"
+                "S3Key": "serverless/numbers/dev/1534565178016-2018-08-18T04:06:18.016Z/numbers.zip"
               },
               "FunctionName": "numbers-dev-putNumber",
               "Handler": "index.handler",
@@ -289,14 +305,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "PutNumberLambdaVersionW1hE53unP8hKECsIsnEglGmdfUv1vsBrPgpkonH4C4": {
+          "PutNumberLambdaVersionZQvNi235WKoLc17sgK6zBkhncc7wh3bfmk9AzvfgQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PutNumberLambdaFunction"
               },
-              "CodeSha256": "CWqHo40PUb+k1drq0+tnmh35hS8F/ssBCkeNWb5gGM8="
+              "CodeSha256": "xyru4yYVI2K24ZgCD//UGOzDA1F3WoJQEihNuvbEvQ8="
             }
           },
           "DeleteNumberLambdaFunction": {
@@ -306,7 +322,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/numbers/dev/1534554206691-2018-08-18T01:03:26.691Z/numbers.zip"
+                "S3Key": "serverless/numbers/dev/1534565178016-2018-08-18T04:06:18.016Z/numbers.zip"
               },
               "FunctionName": "numbers-dev-deleteNumber",
               "Handler": "index.handler",
@@ -330,14 +346,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "DeleteNumberLambdaVersionItmUJovQCtbvlXSGuStUlShoGamlWEB63wa0YqpPELg": {
+          "DeleteNumberLambdaVersionVU36uHyb78LyWDxUGThSVSyyxl6FwGNdV0ShLLkL0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteNumberLambdaFunction"
               },
-              "CodeSha256": "CWqHo40PUb+k1drq0+tnmh35hS8F/ssBCkeNWb5gGM8="
+              "CodeSha256": "xyru4yYVI2K24ZgCD//UGOzDA1F3WoJQEihNuvbEvQ8="
             }
           },
           "ApiGatewayRestApi": {
@@ -366,6 +382,30 @@
               }
             }
           },
+          "ApiGatewayResourceNumbersTerminate": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceNumbers"
+              },
+              "PathPart": "terminate",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceNumbersTerminateProxyVar": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceNumbersTerminate"
+              },
+              "PathPart": "{proxy+}",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
           "ApiGatewayResourceNumbersProxyVar": {
             "Type": "AWS::ApiGateway::Resource",
             "Properties": {
@@ -385,6 +425,49 @@
               "RequestParameters": {},
               "ResourceId": {
                 "Ref": "ApiGatewayResourceNumbers"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "PostNumberLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodNumbersTerminateProxyVarPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceNumbersTerminateProxyVar"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -593,7 +676,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1534554206913": {
+          "ApiGatewayDeployment1534565178223": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -603,6 +686,7 @@
             },
             "DependsOn": [
               "ApiGatewayMethodNumbersPost",
+              "ApiGatewayMethodNumbersTerminateProxyVarPost",
               "ApiGatewayMethodNumbersGet",
               "ApiGatewayMethodNumbersProxyVarGet",
               "ApiGatewayMethodNumbersProxyVarPut",
@@ -860,6 +944,265 @@
                 }
               ]
             }
+          },
+          "NumbersDynamoDBTableReadScalableTarget": {
+            "Type": "AWS::ApplicationAutoScaling::ScalableTarget",
+            "Properties": {
+              "MaxCapacity": 200,
+              "MinCapacity": 5,
+              "ResourceId": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "table",
+                    {
+                      "Ref": "NumbersDynamoDBTable"
+                    }
+                  ]
+                ]
+              },
+              "RoleARN": {
+                "Fn::GetAtt": "IamRoleLambdaExecution.Arn"
+              },
+              "ScalableDimension": "dynamodb:table:ReadCapacityUnits",
+              "ServiceNamespace": "dynamodb"
+            }
+          },
+          "NumbersDynamoDBTableReadScalingPolicy": {
+            "Type": "AWS::ApplicationAutoScaling::ScalingPolicy",
+            "Properties": {
+              "PolicyName": "ReadAutoScalingPolicy",
+              "PolicyType": "TargetTrackingScaling",
+              "ScalingTargetId": {
+                "Ref": "NumbersDynamoDBTableReadScalableTarget"
+              },
+              "TargetTrackingScalingPolicyConfiguration": {
+                "TargetValue": 75,
+                "ScaleInCooldown": 60,
+                "ScaleOutCooldown": 60,
+                "PredefinedMetricSpecification": {
+                  "PredefinedMetricType": "DynamoDBReadCapacityUtilization"
+                }
+              }
+            }
+          },
+          "NumbersDynamoDBTableWriteScalableTarget": {
+            "Type": "AWS::ApplicationAutoScaling::ScalableTarget",
+            "Properties": {
+              "MaxCapacity": 200,
+              "MinCapacity": 5,
+              "ResourceId": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "table",
+                    {
+                      "Ref": "NumbersDynamoDBTable"
+                    }
+                  ]
+                ]
+              },
+              "RoleARN": {
+                "Fn::GetAtt": "IamRoleLambdaExecution.Arn"
+              },
+              "ScalableDimension": "dynamodb:table:WriteCapacityUnits",
+              "ServiceNamespace": "dynamodb"
+            }
+          },
+          "NumbersDynamoDBTableWriteScalingPolicy": {
+            "Type": "AWS::ApplicationAutoScaling::ScalingPolicy",
+            "DependsOn": "NumbersDynamoDBTableReadScalingPolicy",
+            "Properties": {
+              "PolicyName": "WriteAutoScalingPolicy",
+              "PolicyType": "TargetTrackingScaling",
+              "ScalingTargetId": {
+                "Ref": "NumbersDynamoDBTableWriteScalableTarget"
+              },
+              "TargetTrackingScalingPolicyConfiguration": {
+                "TargetValue": 75,
+                "ScaleInCooldown": 60,
+                "ScaleOutCooldown": 60,
+                "PredefinedMetricSpecification": {
+                  "PredefinedMetricType": "DynamoDBWriteCapacityUtilization"
+                }
+              }
+            }
+          },
+          "NumbersDynamoDBTableBlockIndexReadScalableTarget": {
+            "Type": "AWS::ApplicationAutoScaling::ScalableTarget",
+            "Properties": {
+              "MaxCapacity": 200,
+              "MinCapacity": 5,
+              "ResourceId": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "table",
+                    {
+                      "Ref": "NumbersDynamoDBTable"
+                    },
+                    "index",
+                    "BlockIndex"
+                  ]
+                ]
+              },
+              "RoleARN": {
+                "Fn::GetAtt": "IamRoleLambdaExecution.Arn"
+              },
+              "ScalableDimension": "dynamodb:index:ReadCapacityUnits",
+              "ServiceNamespace": "dynamodb"
+            }
+          },
+          "NumbersDynamoDBTableBlockIndexReadScalingPolicy": {
+            "Type": "AWS::ApplicationAutoScaling::ScalingPolicy",
+            "DependsOn": "NumbersDynamoDBTableWriteScalingPolicy",
+            "Properties": {
+              "PolicyName": "ReadAutoScalingPolicy",
+              "PolicyType": "TargetTrackingScaling",
+              "ScalingTargetId": {
+                "Ref": "NumbersDynamoDBTableBlockIndexReadScalableTarget"
+              },
+              "TargetTrackingScalingPolicyConfiguration": {
+                "TargetValue": 75,
+                "ScaleInCooldown": 60,
+                "ScaleOutCooldown": 60,
+                "PredefinedMetricSpecification": {
+                  "PredefinedMetricType": "DynamoDBReadCapacityUtilization"
+                }
+              }
+            }
+          },
+          "NumbersDynamoDBTableBlockIndexWriteScalableTarget": {
+            "Type": "AWS::ApplicationAutoScaling::ScalableTarget",
+            "Properties": {
+              "MaxCapacity": 200,
+              "MinCapacity": 5,
+              "ResourceId": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "table",
+                    {
+                      "Ref": "NumbersDynamoDBTable"
+                    },
+                    "index",
+                    "BlockIndex"
+                  ]
+                ]
+              },
+              "RoleARN": {
+                "Fn::GetAtt": "IamRoleLambdaExecution.Arn"
+              },
+              "ScalableDimension": "dynamodb:index:WriteCapacityUnits",
+              "ServiceNamespace": "dynamodb"
+            }
+          },
+          "NumbersDynamoDBTableBlockIndexWriteScalingPolicy": {
+            "Type": "AWS::ApplicationAutoScaling::ScalingPolicy",
+            "DependsOn": "NumbersDynamoDBTableBlockIndexReadScalingPolicy",
+            "Properties": {
+              "PolicyName": "WriteAutoScalingPolicy",
+              "PolicyType": "TargetTrackingScaling",
+              "ScalingTargetId": {
+                "Ref": "NumbersDynamoDBTableBlockIndexWriteScalableTarget"
+              },
+              "TargetTrackingScalingPolicyConfiguration": {
+                "TargetValue": 75,
+                "ScaleInCooldown": 60,
+                "ScaleOutCooldown": 60,
+                "PredefinedMetricSpecification": {
+                  "PredefinedMetricType": "DynamoDBWriteCapacityUtilization"
+                }
+              }
+            }
+          },
+          "NumbersDynamoDBTableAvailableIndexReadScalableTarget": {
+            "Type": "AWS::ApplicationAutoScaling::ScalableTarget",
+            "Properties": {
+              "MaxCapacity": 200,
+              "MinCapacity": 5,
+              "ResourceId": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "table",
+                    {
+                      "Ref": "NumbersDynamoDBTable"
+                    },
+                    "index",
+                    "AvailableIndex"
+                  ]
+                ]
+              },
+              "RoleARN": {
+                "Fn::GetAtt": "IamRoleLambdaExecution.Arn"
+              },
+              "ScalableDimension": "dynamodb:index:ReadCapacityUnits",
+              "ServiceNamespace": "dynamodb"
+            }
+          },
+          "NumbersDynamoDBTableAvailableIndexReadScalingPolicy": {
+            "Type": "AWS::ApplicationAutoScaling::ScalingPolicy",
+            "DependsOn": "NumbersDynamoDBTableBlockIndexWriteScalingPolicy",
+            "Properties": {
+              "PolicyName": "ReadAutoScalingPolicy",
+              "PolicyType": "TargetTrackingScaling",
+              "ScalingTargetId": {
+                "Ref": "NumbersDynamoDBTableAvailableIndexReadScalableTarget"
+              },
+              "TargetTrackingScalingPolicyConfiguration": {
+                "TargetValue": 75,
+                "ScaleInCooldown": 60,
+                "ScaleOutCooldown": 60,
+                "PredefinedMetricSpecification": {
+                  "PredefinedMetricType": "DynamoDBReadCapacityUtilization"
+                }
+              }
+            }
+          },
+          "NumbersDynamoDBTableAvailableIndexWriteScalableTarget": {
+            "Type": "AWS::ApplicationAutoScaling::ScalableTarget",
+            "Properties": {
+              "MaxCapacity": 200,
+              "MinCapacity": 5,
+              "ResourceId": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "table",
+                    {
+                      "Ref": "NumbersDynamoDBTable"
+                    },
+                    "index",
+                    "AvailableIndex"
+                  ]
+                ]
+              },
+              "RoleARN": {
+                "Fn::GetAtt": "IamRoleLambdaExecution.Arn"
+              },
+              "ScalableDimension": "dynamodb:index:WriteCapacityUnits",
+              "ServiceNamespace": "dynamodb"
+            }
+          },
+          "NumbersDynamoDBTableAvailableIndexWriteScalingPolicy": {
+            "Type": "AWS::ApplicationAutoScaling::ScalingPolicy",
+            "DependsOn": "NumbersDynamoDBTableAvailableIndexReadScalingPolicy",
+            "Properties": {
+              "PolicyName": "WriteAutoScalingPolicy",
+              "PolicyType": "TargetTrackingScaling",
+              "ScalingTargetId": {
+                "Ref": "NumbersDynamoDBTableAvailableIndexWriteScalableTarget"
+              },
+              "TargetTrackingScalingPolicyConfiguration": {
+                "TargetValue": 75,
+                "ScaleInCooldown": 60,
+                "ScaleOutCooldown": 60,
+                "PredefinedMetricSpecification": {
+                  "PredefinedMetricType": "DynamoDBWriteCapacityUtilization"
+                }
+              }
+            }
           }
         },
         "Outputs": {
@@ -871,25 +1214,25 @@
           "PostNumberLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PostNumberLambdaVersionppzajhPOYkV3VS5MmkNPQrZzd1dewGxoCaeRSCBsY"
+              "Ref": "PostNumberLambdaVersionkaYPRaakkiCtMGnQbBUzvlxcjzQx0nricGhFf54g8EQ"
             }
           },
           "GetNumberLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetNumberLambdaVersion7PpowKOeXgS5aVx90zgFVzB1K8nm6koK3ufKvM"
+              "Ref": "GetNumberLambdaVersionXMmJ0XcqcVQOL6kLbS5CGlG1yIZwEgWKFCNNnsNIr78"
             }
           },
           "PutNumberLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PutNumberLambdaVersionW1hE53unP8hKECsIsnEglGmdfUv1vsBrPgpkonH4C4"
+              "Ref": "PutNumberLambdaVersionZQvNi235WKoLc17sgK6zBkhncc7wh3bfmk9AzvfgQ"
             }
           },
           "DeleteNumberLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteNumberLambdaVersionItmUJovQCtbvlXSGuStUlShoGamlWEB63wa0YqpPELg"
+              "Ref": "DeleteNumberLambdaVersionVU36uHyb78LyWDxUGThSVSyyxl6FwGNdV0ShLLkL0"
             }
           },
           "ServiceEndpoint": {
@@ -932,8 +1275,18 @@
       "vpc": {}
     },
     "custom": {
-      "tableName": "numbers-table-dev"
+      "tableName": "numbers-table-dev",
+      "dynamodbAutoscaling": {
+        "tablesConfig": {
+          "tableName": {
+            "minCapacity": 10
+          }
+        }
+      }
     },
+    "plugins": [
+      "serverless-plugin-dynamodb-autoscaling"
+    ],
     "pluginsData": {},
     "functions": {
       "postNumber": {
@@ -941,6 +1294,9 @@
         "events": [
           {
             "http": "POST /numbers"
+          },
+          {
+            "http": "POST /numbers/terminate/{proxy+}"
           }
         ],
         "name": "numbers-dev-postNumber",
@@ -1068,7 +1424,7 @@
     "artifact": "/Users/cliburnsolano/Documents/Work/MyRepublic/NumeroUno/numbers/.serverless/numbers.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/numbers/dev/1534554206691-2018-08-18T01:03:26.691Z",
+    "artifactDirectoryName": "serverless/numbers/dev/1534565178016-2018-08-18T04:06:18.016Z",
     "artifact": "numbers.zip"
   }
 }

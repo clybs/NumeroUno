@@ -8,9 +8,11 @@ const NUMBERS_TABLE = process.env.NUMBERS_TABLE;
 const LIST_LIMIT = 2;
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
+app.use(bodyParser.json({ strict: false }));
+
 // List via available index
 function listAvailableIndex(filters) {
-    const { res, limit, number, block, available } = filters;
+    const { res, limit, number, available } = filters;
     const params = {
         TableName: NUMBERS_TABLE,
         Limit: limit,
@@ -42,7 +44,7 @@ function listAvailableIndex(filters) {
             if (result.LastEvaluatedKey) {
                 // Create the next page
                 const { number, available } = result.LastEvaluatedKey;
-                result.nextPage = `?limit=${limit}&number=${number}&available=${available}`;
+                result.nextList = `?limit=${limit}&number=${number}&available=${available}`;
             }
 
             // Delete the not needed values
@@ -90,12 +92,12 @@ function listBlockIndex(filters) {
             if (result.LastEvaluatedKey) {
                 // Create the next page
                 const { number, block } = result.LastEvaluatedKey;
-                result.nextPage = `?limit=${limit}&number=${number}&block=${block}`;
+                result.nextList = `?limit=${limit}&number=${number}&block=${block}`;
             }
 
             // Delete the not needed values
             delete result.ScannedCount;
-            delete result.LastEvaluatedKey;
+            // delete result.LastEvaluatedKey;
 
             res.json(result);
         } else {
@@ -129,7 +131,7 @@ function listNormal(filters) {
             if (result.LastEvaluatedKey) {
                 // Create the next page
                 const { number } = result.LastEvaluatedKey;
-                result.nextPage = `?limit=${limit}&number=${number}`;
+                result.nextList = `?limit=${limit}&number=${number}`;
             }
 
             // Delete the not needed values
@@ -143,41 +145,69 @@ function listNormal(filters) {
     });
 }
 
-app.use(bodyParser.json({ strict: false }));
-
-app.get('/', function (req, res) {
-    res.send('Nothing here')
-});
-
 // Create a number
 app.post('/numbers', function (req, res) {
     const { number, block, country } = req.body;
     if (typeof number !== 'string') {
-        res.status(400).json({ error: '"number" must be a string' });
+    res.status(400).json({ error: '"number" must be a string' });
     }
     if (typeof block !== 'string') {
         res.status(400).json({ error: '"block" must be a string' });
     }
     if (typeof country !== 'string') {
-        res.status(400).json({ error: '"area" must be a string' });
+        res.status(400).json({ error: '"country" must be a string' });
     }
 
     const params = {
         TableName: NUMBERS_TABLE,
-        Item: {
+        Key: {
             number: number,
-            block: block,
-            country: country,
-            available: "true"
         },
     };
 
-    dynamoDb.put(params, (error) => {
+    // Check first if it does not exists because this is an upsert
+    // Some items will be overwritten if not checked i.e. created date
+    dynamoDb.get(params, (error, result) => {
         if (error) {
             console.log(error);
-            res.status(400).json({ error: 'Could not create number' });
+            res.status(400).json({ error: 'Could not get number' });
         }
-        res.json({ number, block, country, available: "true" });
+        if (result.Item) {
+            // Display the existing one
+            const { number, block, country, available, created, updated, history } = result.Item;
+            res.json({
+                number,
+                block,
+                country,
+                available,
+                created,
+                updated,
+                history
+            });
+
+        } else {
+            // Start the creation
+            const now = new Date();
+            const params = {
+                TableName: NUMBERS_TABLE,
+                Item: {
+                    number: number,
+                    block: block,
+                    country: country,
+                    available: "true",
+                    created: now.toISOString(),
+                    history: ["created - " + now.toISOString()]
+                },
+            };
+
+            dynamoDb.put(params, (error) => {
+                if (error) {
+                    console.log(error);
+                    res.status(400).json({ error: 'Could not create number' });
+                }
+                res.json(params.Item);
+            });
+        }
     });
 });
 
@@ -196,8 +226,16 @@ app.get('/numbers/:number', function (req, res) {
             res.status(400).json({ error: 'Could not get number' });
         }
         if (result.Item) {
-            const {number, block, country, available} = result.Item;
-            res.json({ number, block, country, available });
+            const { number, block, country, available, created, updated, history } = result.Item;
+            res.json({
+                number,
+                block,
+                country,
+                available,
+                created,
+                updated,
+                history
+            });
         } else {
             res.status(404).json({ error: "number not found" });
         }
@@ -206,7 +244,7 @@ app.get('/numbers/:number', function (req, res) {
 
 // List numbers
 app.get('/numbers', function (req, res) {
-    const limit = req.query.limit || LIST_LIMIT;
+    const limit = Math.abs(req.query.limit) || LIST_LIMIT;
     const number = req.query.number || "";
     const block = req.query.block || "";
     const available = req.query.available || "";
@@ -223,6 +261,20 @@ app.get('/numbers', function (req, res) {
 
 // Update a number
 app.put('/numbers/:number', function (req, res) {
+    const { block, country, available } = req.body;
+    if (typeof block !== 'string') {
+        res.status(400).json({ error: '"block" must be a string' });
+    }
+    if (typeof country !== 'string') {
+        res.status(400).json({ error: '"country" must be a string' });
+    }
+    if (typeof available !== 'string') {
+        res.status(400).json({ error: '"available" must be a string' });
+    }
+    if (available !== 'true' && available !== 'false') {
+        res.status(400).json({ error: '"available" must be true or false' });
+    }
+
     // Check first if it exists
     const params = {
         TableName: NUMBERS_TABLE,
@@ -238,37 +290,29 @@ app.put('/numbers/:number', function (req, res) {
         }
         if (result.Item) {
             // Start the update
-            const { block, country, available } = req.body;
-            if (typeof block !== 'string') {
-                res.status(400).json({ error: '"block" must be a string' });
-            }
-            if (typeof country !== 'string') {
-                res.status(400).json({ error: '"area" must be a string' });
-            }
-            if (typeof available !== 'string') {
-                res.status(400).json({ error: '"available" must be a string' });
-            }
-
+            const now = new Date();
             const params = {
                 TableName: NUMBERS_TABLE,
                 Key: {
                     number: req.params.number,
                 },
-                UpdateExpression: "set #a=:a, #b=:b, #c=:c",
+                UpdateExpression: "set #a=:a, #b=:b, #c=:c, #u=:u, #h=:h",
                 ExpressionAttributeNames: {
                     '#a':'available',
                     '#b':'block',
-                    '#c':'country'
+                    '#c':'country',
+                    "#u":'updated',
+                    "#h":'history'
                 },
                 ExpressionAttributeValues:{
                     ":a":available,
                     ":b":block,
-                    ":c":country
+                    ":c":country,
+                    ":u":now.toISOString(),
+                    ":h":[...result.Item.history, "updated - " + now.toISOString()]
                 },
-                ReturnValues:"UPDATED_NEW"
+                ReturnValues:"ALL_NEW"
             };
-
-            console.log(params);
 
             dynamoDb.update(params, (error, result) => {
                 if (error) {
@@ -276,9 +320,9 @@ app.put('/numbers/:number', function (req, res) {
                     res.status(400).json({ error: 'Could not update number' });
                 }
                 if (result.Attributes) {
-                    const {block, country, available} = result.Attributes;
+                    const {block, country, available, created, updated, history } = result.Attributes;
                     const number = params.Key.number;
-                    res.json({ number, block, country, available });
+                    res.json({ number, block, country, available, created, updated, history });
                 } else {
                     res.status(404).json({ error: "number not found" });
                 }
@@ -306,6 +350,61 @@ app.delete('/numbers/:number', function (req, res) {
         }
         if (result) {
             res.json({ message: `Number deleted: ${params.Key.number}` });
+        } else {
+            res.status(404).json({ error: "number not found" });
+        }
+    });
+});
+
+// Terminate a number
+app.post('/numbers/terminate/:number', function (req, res) {
+    const params = {
+        TableName: NUMBERS_TABLE,
+        Key: {
+            number: req.params.number,
+        },
+    };
+
+    dynamoDb.get(params, (error, result) => {
+        if (error) {
+            console.log(error);
+            res.status(400).json({ error: 'Could not get number' });
+        }
+        if (result.Item) {
+            // Start the termination
+            const now = new Date();
+            const params = {
+                TableName: NUMBERS_TABLE,
+                Key: {
+                    number: req.params.number,
+                },
+                UpdateExpression: "set #a=:a, #u=:u, #h=:h",
+                ExpressionAttributeNames: {
+                    '#a':'available',
+                    "#u":'updated',
+                    "#h":'history'
+                },
+                ExpressionAttributeValues:{
+                    ":a":"false",
+                    ":u":now.toISOString(),
+                    ":h":[...result.Item.history, "terminated - " + now.toISOString()]
+                },
+                ReturnValues:"ALL_NEW"
+            };
+
+            dynamoDb.update(params, (error, result) => {
+                if (error) {
+                    console.log(error);
+                    res.status(400).json({ error: 'Could not update number' });
+                }
+                if (result.Attributes) {
+                    const {block, country, available, created, updated, history } = result.Attributes;
+                    const number = params.Key.number;
+                    res.json({ number, block, country, available, created, updated, history });
+                } else {
+                    res.status(404).json({ error: "number not found" });
+                }
+            });
         } else {
             res.status(404).json({ error: "number not found" });
         }

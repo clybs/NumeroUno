@@ -2,8 +2,16 @@ service: numbers
 #app: numerouno
 #tenant: clybs
 
+plugins:
+  - serverless-plugin-dynamodb-autoscaling
+
 custom:
   tableName: 'numbers-table-${self:provider.stage}'
+  dynamodbAutoscaling:
+    tablesConfig:
+      # Tweak minCapacity setting for tableName (for both table and indexes)
+      tableName:
+        minCapacity: 1
 
 provider:
   name: aws
@@ -30,15 +38,11 @@ provider:
     NUMBERS_TABLE: ${self:custom.tableName}
 
 functions:
-#  app:
-#    handler: index.handler
-#    events:
-#    - http: ANY /
-#    - http: 'ANY {proxy+}'
   postNumber:
     handler: index.handler
     events:
     - http: 'POST /numbers'
+    - http: 'POST /numbers/terminate/{proxy+}'
   getNumber:
     handler: index.handler
     events:
@@ -69,8 +73,8 @@ resources:
         - AttributeName: number
           KeyType: HASH
         ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
         TableName: ${self:custom.tableName}
         GlobalSecondaryIndexes:
         - IndexName: BlockIndex
@@ -80,8 +84,8 @@ resources:
           Projection:
             ProjectionType: ALL
           ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
+            ReadCapacityUnits: 2
+            WriteCapacityUnits: 2
         - IndexName: AvailableIndex
           KeySchema:
           - AttributeName: available
@@ -89,7 +93,7 @@ resources:
           Projection:
             ProjectionType: ALL
           ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
+            ReadCapacityUnits: 2
+            WriteCapacityUnits: 2
 
 
