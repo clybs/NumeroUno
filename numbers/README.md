@@ -3,6 +3,9 @@
 # NumeroUno - Numbers Service
 Everything that has to do with numbers
 
+### Architecture
+![NumeroUno - Numbers](https://user-images.githubusercontent.com/4023187/44296159-367d5d80-a2eb-11e8-9519-3e6078044109.png)
+
 ### Installation
 You need to have an AWS account and have finished setting up your [Provider Credentials].
 
@@ -128,12 +131,20 @@ $ curl -X POST {some hostname...}/terminate/numbers
 | number | String | Number to terminate |
 
 ### LIVE endpoints
+
 Dev Endpoint: 
 [https://v83vzzjgt3.execute-api.ap-southeast-1.amazonaws.com/dev/numbers]
 
 Prod Endpoint: 
 [https://eakqwv9ip3.execute-api.ap-southeast-1.amazonaws.com/prod/numbers]
 
+### Dev Notes
+- Went with serverless because it manages my code as well as my infrastructure
+- Deployed in Singapore as this is the closest to client (ap-southeast-1)
+- Authentication is left to another service
+- Available and Blocked properties are indexed for faster retrieval
+- No test added as this is time constrained
+- Blocks and numbers are string because a number can start in 0; i.e. 0918
 
 [Provider Credentials]: <https://www.youtube.com/watch?v=HSd9uYj2LJA>
 [https://v83vzzjgt3.execute-api.ap-southeast-1.amazonaws.com/dev/numbers]:<https://v83vzzjgt3.execute-api.ap-southeast-1.amazonaws.com/dev/numbers>
